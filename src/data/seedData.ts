@@ -53,7 +53,7 @@ export const INITIAL_FISH_CATALOG: FishItem[] = [
     available: true,
     unit: 'kg',
     badge: 'Best Seller',
-    image: 'https://images.unsplash.com/photo-1522036662703-a3d8b584028b?auto=format&fit=crop&w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?auto=format&fit=crop&w=600&q=80',
     description: 'Top grade Seer fish steaks. Single central bone, extremely popular for frying.',
   },
   {

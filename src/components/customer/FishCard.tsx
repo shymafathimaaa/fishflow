@@ -30,7 +30,7 @@ export const FishCard: React.FC<FishCardProps> = ({
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           onError={(e) => {
             // Fallback SVG placeholder if Unsplash image is blocked
-            (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e0f2fe"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%230284c7">🐟 ${encodeURIComponent(fish.name)}</text></svg>';
+            (e.target as HTMLImageElement).src = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23e0f2fe"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="24" fill="%230284c7">🐟 ${encodeURIComponent(fish.name)}</text></svg>`;
           }}
         />
         

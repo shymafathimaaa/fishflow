@@ -261,31 +261,31 @@ export const OrderTracker: React.FC = () => {
             </div>
           )}
 
-          {/* Live Queue Metrics */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Estimated Wait</span>
-                <Clock className="w-4 h-4 text-brand-600" />
+          {/* Prominent Live Queue Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+            <div className="bg-white p-6 rounded-2xl border-2 border-teal-100 shadow-sm flex flex-col items-center justify-center text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Layers className="w-5 h-5 text-teal-600" />
+                <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Orders Ahead</span>
               </div>
-              <div className="text-3xl font-black text-slate-900 mt-2">
-                ~{order.estimatedWaitMinutes} mins
+              <div className="text-5xl font-black text-slate-900 mb-2">
+                {order.ordersAhead}
               </div>
-              <span className="text-xs text-slate-500 font-medium mt-1 block">
-                Confidence range: {order.confidenceRange}
+              <span className="text-xs text-slate-500 font-medium max-w-[200px]">
+                {order.ordersAhead === 0 ? 'You are next in line at counter!' : `${order.ordersAhead} customer orders preparing before you`}
               </span>
             </div>
 
-            <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200/80">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Orders Ahead in Queue</span>
-                <Layers className="w-4 h-4 text-teal-600" />
+            <div className="bg-white p-6 rounded-2xl border-2 border-brand-100 shadow-sm flex flex-col items-center justify-center text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="w-5 h-5 text-brand-600" />
+                <span className="text-sm font-bold text-slate-500 uppercase tracking-widest">Estimated Wait</span>
               </div>
-              <div className="text-3xl font-black text-slate-900 mt-2">
-                {order.ordersAhead}
+              <div className="text-5xl font-black text-slate-900 mb-2">
+                {order.estimatedWaitMinutes} <span className="text-2xl font-bold text-slate-600">min</span>
               </div>
-              <span className="text-xs text-slate-500 font-medium mt-1 block">
-                {order.ordersAhead === 0 ? 'You are next in line at counter!' : `${order.ordersAhead} customer orders preparing before you`}
+              <span className="text-xs text-slate-500 font-medium">
+                Confidence range: {order.confidenceRange}
               </span>
             </div>
           </div>

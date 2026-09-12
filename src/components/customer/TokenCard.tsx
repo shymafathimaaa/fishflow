@@ -63,76 +63,112 @@ export const TokenCard: React.FC<TokenCardProps> = ({ order }) => {
       </div>
 
       {/* Main Token Display Box */}
-      <div className="p-6 sm:p-8 text-center bg-gradient-to-b from-brand-50/60 via-white to-white space-y-4">
-        <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest block">
-          FishFlow Token ID
-        </span>
-
-        {/* Large Token + Copy Action */}
-        <div className="flex items-center justify-center gap-3">
-          <div className="text-5xl sm:text-6xl font-black text-brand-600 tracking-tight filter drop-shadow-xs">
-            {order.token}
-          </div>
-          <button
-            onClick={handleCopyToken}
-            className="p-2.5 rounded-xl bg-white border border-slate-200 hover:border-brand-300 text-slate-500 hover:text-brand-600 shadow-2xs transition-all active:scale-95"
-            title="Copy Token to clipboard"
-            aria-label="Copy Token ID"
-          >
-            {copied ? <Check className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5" />}
-          </button>
-        </div>
-
-        {copied && (
-          <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full inline-block animate-fade-in">
-            Copied Token to Clipboard!
+      <div className="p-6 sm:p-8 text-center bg-gradient-to-b from-brand-50/60 via-white to-white space-y-8">
+        <div>
+          <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest block mb-2">
+            FishFlow Token ID
           </span>
-        )}
 
-        <div className="flex justify-center pt-1">
-          <StatusBadge status={order.status} size="lg" />
+          {/* Large Token + Copy Action */}
+          <div className="flex items-center justify-center gap-3">
+            <div className="text-6xl sm:text-7xl font-black text-brand-600 tracking-tight filter drop-shadow-sm">
+              {order.token}
+            </div>
+            <button
+              onClick={handleCopyToken}
+              className="p-3 rounded-xl bg-white border border-slate-200 hover:border-brand-300 text-slate-500 hover:text-brand-600 shadow-sm transition-all active:scale-95"
+              title="Copy Token to clipboard"
+              aria-label="Copy Token ID"
+            >
+              {copied ? <Check className="w-6 h-6 text-emerald-500" /> : <Copy className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {copied && (
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full inline-block animate-fade-in mt-2">
+              Copied Token to Clipboard!
+            </span>
+          )}
         </div>
 
-        {/* Inline QR Code & Live Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 max-w-lg mx-auto items-center">
-          
-          {/* QR Code Container */}
-          <div className="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col items-center justify-center">
-            {qrSrc ? (
-              <img src={qrSrc} alt={`QR Code for ${order.token}`} className="w-24 h-24 rounded-lg" />
-            ) : (
-              <div className="w-24 h-24 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
-                <QrCode className="w-8 h-8" />
-              </div>
-            )}
-            <span className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-wider">
-              Scan at Counter
-            </span>
-          </div>
-
-          {/* Metric 1: Est Wait */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-2xs flex flex-col items-center justify-center h-full">
-            <div className="w-8 h-8 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center mb-1">
-              <Clock className="w-4 h-4" />
+        {/* Visual Progress Steps Tracker */}
+        <div className="py-2 max-w-sm mx-auto">
+          <div className="relative">
+            <div className="absolute top-1/2 left-4 right-4 h-1 bg-slate-200 -translate-y-1/2 -z-0">
+              <div
+                className="h-1 bg-gradient-to-r from-brand-600 to-teal-500 transition-all duration-500"
+                style={{
+                  width: `${(Math.max(0, ['Waiting', 'Preparing', 'Ready', 'Completed'].indexOf(order.status)) / 3) * 100}%`,
+                }}
+              />
             </div>
-            <span className="text-xs text-slate-400 font-medium">Estimated Wait</span>
-            <span className="text-xl font-extrabold text-slate-900 mt-0.5">
-              ~{order.estimatedWaitMinutes} mins
-            </span>
-            <span className="text-[10px] text-slate-400">{order.confidenceRange}</span>
-          </div>
 
-          {/* Metric 2: Orders Ahead */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-2xs flex flex-col items-center justify-center h-full">
-            <div className="w-8 h-8 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center mb-1">
-              <Layers className="w-4 h-4" />
+            <div className="relative z-10 flex items-center justify-between">
+              {['Waiting', 'Preparing', 'Ready', 'Completed'].map((statusLabel, idx) => {
+                const currentIndex = ['Waiting', 'Preparing', 'Ready', 'Completed'].indexOf(order.status);
+                const isDone = currentIndex >= idx;
+                const isCurrent = currentIndex === idx;
+
+                return (
+                  <div key={statusLabel} className="flex flex-col items-center">
+                    <div
+                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm transition-all duration-300 ${
+                        isDone
+                          ? 'bg-gradient-to-tr from-brand-600 to-teal-500 text-white shadow-md'
+                          : 'bg-white border-2 border-slate-300 text-slate-400'
+                      } ${isCurrent ? 'ring-4 ring-brand-100 scale-110' : ''}`}
+                    >
+                      {isDone ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : idx + 1}
+                    </div>
+                    <span
+                      className={`text-[10px] sm:text-xs font-bold mt-2 absolute -bottom-6 ${
+                        isCurrent ? 'text-brand-700' : isDone ? 'text-slate-700' : 'text-slate-400'
+                      }`}
+                    >
+                      {statusLabel}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-            <span className="text-xs text-slate-400 font-medium">Orders Ahead</span>
-            <span className="text-xl font-extrabold text-slate-900 mt-0.5">
+          </div>
+        </div>
+
+        {/* Prominent Live Metrics */}
+        <div className="grid grid-cols-2 gap-4 pt-6 max-w-lg mx-auto">
+          {/* Metric 1: Orders Ahead */}
+          <div className="bg-white p-5 rounded-2xl border-2 border-teal-100 shadow-sm flex flex-col items-center justify-center">
+            <span className="text-sm text-slate-500 font-bold uppercase tracking-wide mb-1">Orders Ahead</span>
+            <span className="text-4xl font-black text-slate-900 mb-1">
               {order.ordersAhead}
             </span>
-            <span className="text-[10px] text-slate-400">in live queue</span>
+            <span className="text-xs text-slate-400 font-medium">in live queue</span>
           </div>
+
+          {/* Metric 2: Est Wait */}
+          <div className="bg-white p-5 rounded-2xl border-2 border-brand-100 shadow-sm flex flex-col items-center justify-center">
+            <span className="text-sm text-slate-500 font-bold uppercase tracking-wide mb-1">Estimated Wait</span>
+            <span className="text-4xl font-black text-slate-900 mb-1">
+              {order.estimatedWaitMinutes} <span className="text-2xl font-bold text-slate-600">min</span>
+            </span>
+            <span className="text-xs text-slate-400 font-medium">{order.confidenceRange}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* QR Code Section (Moved above Items) */}
+      <div className="p-6 border-t border-slate-100 bg-white flex flex-col items-center">
+        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+          Present QR Code at Counter
+        </span>
+        <div className="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          {qrSrc ? (
+            <img src={qrSrc} alt={`QR Code for ${order.token}`} className="w-32 h-32 rounded-lg" />
+          ) : (
+            <div className="w-32 h-32 bg-slate-100 rounded-lg flex items-center justify-center text-slate-400">
+              <QrCode className="w-10 h-10" />
+            </div>
+          )}
         </div>
       </div>
 

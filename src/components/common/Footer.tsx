@@ -5,7 +5,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-slate-900 text-slate-400 border-t border-slate-800 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-white">
@@ -16,10 +16,6 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-slate-400 leading-relaxed mb-4">
               AI-assisted fish market pre-order and smart queue management system designed to eliminate customer waiting times.
             </p>
-            <span className="inline-flex items-center gap-1.5 bg-brand-950/80 text-brand-300 text-xs font-semibold px-3 py-1 rounded-full border border-brand-800">
-              <Info className="w-3.5 h-3.5" />
-              Prototype & Demo Mode
-            </span>
           </div>
 
           <div>
@@ -30,13 +26,6 @@ export const Footer: React.FC = () => {
               <li><a href="/dashboard" className="hover:text-white transition-colors">Market Staff Dashboard</a></li>
               <li><a href="/recent" className="hover:text-white transition-colors">Order History</a></li>
             </ul>
-          </div>
-
-          <div>
-            <h3 className="text-white font-semibold text-sm tracking-wider uppercase mb-4">Prototype & AI Disclaimer</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Field observations (approx 4–8 min wait, 1–2 kg orders, 6 active workers) and prediction wait times are prototype inputs. The prediction pipeline is designed to be plug-and-play with future ML regression models.
-            </p>
           </div>
         </div>
 
